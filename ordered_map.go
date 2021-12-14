@@ -110,7 +110,7 @@ func (m *T) LastKey() string {
 
 // GetFirstKey returns first key form list
 // time O(1)
-// space O91
+// space O(1)
 func (m *T) GetFirstKey() string {
 	element := m.elements.Front()
 
@@ -151,4 +151,11 @@ func (m *T) Remove(key string) {
 // space O(1)
 func (m *T) Len() int {
 	return len(m.keyStorage)
+}
+
+// time O(1)
+// space O(1)
+func (m *T) Has(key string) bool {
+	_, ok := m.keyStorage[key]
+	return ok
 }

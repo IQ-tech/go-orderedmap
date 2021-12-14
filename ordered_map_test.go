@@ -166,4 +166,20 @@ func Test_OrderedMap(t *testing.T) {
 			assert.Equal(t, 0, m.Len())
 		})
 	})
+
+	t.Run("Has", func(t *testing.T) {
+		t.Run("checks if key is in the map", func(t *testing.T) {
+			m := orderedmap.New()
+
+			assert.False(t, m.Has("any_key"))
+
+			m.Set("key", "value")
+
+			assert.True(t, m.Has("key"))
+
+			m.Set("other_key", 42)
+
+			assert.True(t, m.Has("other_key"))
+		})
+	})
 }
