@@ -152,3 +152,10 @@ func (m *T) Remove(key string) {
 func (m *T) Len() int {
 	return len(m.keyStorage)
 }
+
+// time O(1)
+// space O(1)
+func (m *T) Has(key string) bool {
+	_, ok := m.keyStorage[key]
+	return ok
+}

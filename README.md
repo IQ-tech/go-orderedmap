@@ -46,4 +46,8 @@ m.PrevKey("one") // => "", orderedmap.ErrNotFound
 
 // Returns the number of elements in the map
 m.Len() // => 2 (keys "two" and "three)
+
+// Checks if key is in the map
+m.Has("one") // => false
+m.Has("two") // => true
 ```
