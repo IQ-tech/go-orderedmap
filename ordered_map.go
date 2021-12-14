@@ -110,7 +110,7 @@ func (m *T) LastKey() string {
 
 // GetFirstKey returns first key form list
 // time O(1)
-// space O91
+// space O(1)
 func (m *T) GetFirstKey() string {
 	element := m.elements.Front()
 
