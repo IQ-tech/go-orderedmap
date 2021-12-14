@@ -3,7 +3,7 @@ package orderedmap_test
 import (
 	"testing"
 
-	orderedmap "github.com/IQ-tech/go-ordered-map"
+	orderedmap "github.com/IQ-tech/go-orderedmap"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -128,6 +128,42 @@ func Test_OrderedMap(t *testing.T) {
 		t.Run("if the map is empty, returns the empty string", func(t *testing.T) {
 			m := orderedmap.New()
 			assert.Equal(t, "", m.GetFirstKey())
+		})
+	})
+
+	t.Run("Remove", func(t *testing.T) {
+		t.Run("removes element from the map", func(t *testing.T) {
+			_, err := m.Get("one")
+			assert.NoError(t, err)
+
+			key, err := m.PrevKey("two")
+			assert.NoError(t, err)
+			assert.Equal(t, "one", key)
+
+			m.Remove("one")
+
+			_, err = m.Get("one")
+			assert.Equal(t, orderedmap.ErrNotFound, err)
+
+			key, err = m.PrevKey("two")
+			assert.NoError(t, err)
+			assert.Equal(t, "", key)
+		})
+	})
+
+	t.Run("Len", func(t *testing.T) {
+		t.Run("returns the number of elements in the map", func(t *testing.T) {
+			m := orderedmap.New()
+
+			assert.Equal(t, 0, m.Len())
+
+			m.Set("a", "a")
+
+			assert.Equal(t, 1, m.Len())
+
+			m.Remove("a")
+
+			assert.Equal(t, 0, m.Len())
 		})
 	})
 }

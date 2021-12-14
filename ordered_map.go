@@ -3,6 +3,7 @@ package orderedmap
 import (
 	"container/list"
 	"errors"
+	"fmt"
 )
 
 // ErrNotFound error for element not found
@@ -27,6 +28,8 @@ type elemKeyValuePair struct {
 }
 
 // Set sets new elements to list
+// time O(1)
+// space O(n)
 func (m *T) Set(key string, value interface{}) {
 	// adds new item
 	keyValue := elemKeyValuePair{
@@ -45,6 +48,8 @@ func (m *T) Set(key string, value interface{}) {
 }
 
 // Get gets value by key
+// time O(1)
+// space O(1)
 func (m *T) Get(key string) (interface{}, error) {
 	element, ok := m.keyStorage[key]
 	if !ok {
@@ -55,6 +60,8 @@ func (m *T) Get(key string) (interface{}, error) {
 }
 
 // PrevKey returns previous key
+// time O(1)
+// space O(1)
 func (m *T) PrevKey(key string) (string, error) {
 	element, ok := m.keyStorage[key]
 	if !ok {
@@ -70,6 +77,8 @@ func (m *T) PrevKey(key string) (string, error) {
 }
 
 // NextKey returns next key
+// time O(1)
+// space O(1)
 func (m *T) NextKey(key string) (string, error) {
 	element, ok := m.keyStorage[key]
 	if !ok {
@@ -85,6 +94,8 @@ func (m *T) NextKey(key string) (string, error) {
 }
 
 // LastKey returns last key form list
+// time O(1)
+// space O(1)
 func (m *T) LastKey() string {
 	element := m.elements.Back()
 
@@ -98,6 +109,8 @@ func (m *T) LastKey() string {
 }
 
 // GetFirstKey returns first key form list
+// time O(1)
+// space O91
 func (m *T) GetFirstKey() string {
 	element := m.elements.Front()
 
@@ -108,4 +121,34 @@ func (m *T) GetFirstKey() string {
 	firstElem := element.Value.(elemKeyValuePair)
 
 	return firstElem.Key
+}
+
+// time O(1)
+// space O(1)
+func (m *T) Remove(key string) {
+	element, ok := m.keyStorage[key]
+	if !ok {
+		return
+	}
+
+	m.elements.Remove(element)
+
+	delete(m.keyStorage, key)
+
+	if len(m.keyStorage) != m.elements.Len() {
+		panic(fmt.Sprintf(`
+		bug: number of elements in the map is not the same as the number of elements in the list.
+		map: %+v
+		list: %+v
+		`,
+			m.keyStorage,
+			m.elements,
+		))
+	}
+}
+
+// time O(1)
+// space O(1)
+func (m *T) Len() int {
+	return len(m.keyStorage)
 }
